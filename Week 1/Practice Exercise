@@ -1,0 +1,48 @@
+-- Exercise 1
+
+SELECT email_address
+FROM dsv1069.users
+WHERE deleted_at IS NULL;
+
+-- Exercise 2
+
+SELECT COUNT(*)
+FROM dsv1069.items;
+
+-- Exercise 3
+
+SELECT *
+FROM dsv1069.users AS u
+INNER JOIN dsv1069.orders AS o
+  ON u.id = o.user_id;
+
+-- Exercise 4
+
+SELECT COUNT(DISTINCT event_id),
+       event_name
+FROM dsv1069.events
+WHERE event_name IN ('view_item')
+GROUP BY event_name;
+
+-- Exercise 5
+
+SELECT COUNT(DISTINCT item_id)
+FROM dsv1069.users;
+
+-- Exercise 6
+
+SELECT u.id,
+       min(o.paid_at)
+FROM dsv1069.users AS u
+LEFT JOIN dsv1069.orders AS o
+  ON u.id = o.user_id
+GROUP BY u.id;
+
+-- Exercise 7
+
+SELECT (
+          (SELECT DISTINCT COUNT(user_id)
+           FROM dsv1069.events
+           WHERE event_name IN ('view_user_profile') )/CAST(COUNT(u.id) AS float) * 100) AS percentUsersViewedOwnPage
+FROM dsv1069.users AS u;
+
